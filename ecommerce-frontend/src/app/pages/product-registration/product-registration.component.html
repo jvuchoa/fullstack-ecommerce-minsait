@@ -1,0 +1,56 @@
+<div class="container">
+  <h1>{{ isEditMode ? 'Editar Produto' : 'Cadastrar Produto' }}</h1>
+
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Nome -->
+    <div class="form-group">
+      <label for="name">Nome do Produto *</label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        placeholder="Ex: Notebook Dell Inspiron">
+      <span class="error-message" *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+        Campo obrigatório (mínimo 3 caracteres)
+      </span>
+    </div>
+
+    <!-- Código de Barras -->
+    <div class="form-group">
+      <label for="barcode">Código de Barras *</label>
+      <input
+        type="text"
+        id="barcode"
+        formControlName="barcode"
+        placeholder="Ex: 7891234567890">
+      <span class="error-message" *ngIf="productForm.get('barcode')?.invalid && productForm.get('barcode')?.touched">
+        Campo obrigatório (mínimo 8 caracteres)
+      </span>
+    </div>
+
+    <!-- Preço -->
+    <div class="form-group">
+      <label for="price">Preço *</label>
+      <input
+        type="number"
+        id="price"
+        formControlName="price"
+        step="0.01"
+        placeholder="Ex: 3500.00">
+      <span class="error-message" *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched">
+        Preço deve ser maior que zero
+      </span>
+    </div>
+
+    <!-- Botões -->
+    <div class="form-actions">
+      <button type="submit" class="btn-submit" [disabled]="productForm.invalid">
+        {{ isEditMode ? 'Atualizar' : 'Cadastrar' }}
+      </button>
+      <button type="button" class="btn-cancel" (click)="onCancel()">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>
