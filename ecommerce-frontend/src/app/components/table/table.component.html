@@ -1,0 +1,35 @@
+<!-- Colunas: Nome, Preço (formatado), Cód. Barras (requisito do documento) -->
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Preço</th>
+      <th>Cód. Barras</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.name }}</td>
+      <td>{{ product.price | currency:'BRL' }}</td>
+      <td>{{ product.barcode }}</td>
+      <td>
+        <button [routerLink]="['/produtos/editar', product.id]" class="btn-edit">
+           Editar
+        </button>
+        
+        <button (click)="onDelete(product.id)" class="btn-delete">
+           Excluir
+        </button>
+        
+        <button (click)="onAddToCart(product)" class="btn-cart">
+           Adicionar
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="products.length === 0" class="empty-message">
+  Nenhum produto cadastrado.
+</p>
