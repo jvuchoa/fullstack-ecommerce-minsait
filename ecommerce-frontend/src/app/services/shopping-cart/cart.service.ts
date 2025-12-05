@@ -13,7 +13,7 @@ export class CartService {
   
   constructor() {}
 
-  get cartItems$(): Observable<CartItem[]> {
+  getCartItems(): Observable<CartItem[]> {
     return this.cartItemsSubject.asObservable();
   }
   addToCart(product: Product, quantity: number = 1): void { //alterar aqui 
