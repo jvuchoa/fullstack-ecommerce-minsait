@@ -1,8 +1,12 @@
 import { Routes } from '@angular/router';
+import { ProductsListComponent } from './pages/product-list/product-list.component';
+import { ProductRegistrationComponent } from './pages/product-registration/product-registration.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 export const routes: Routes = [
-    {path: 'products', loadComponent: () => import('./pages/product-list/product-list.component').then(m => m.ListagemProdutosComponent)},
-    {path: 'products/new', loadComponent: () => import('./pages/product-registration/product-registration.component').then(m => m.ProductRegistrationComponent)},
-    {path: 'products/edit/:id', loadComponent: () => import('./pages/product-registration/product-registration.component').then(m => m.ProductRegistrationComponent)},
-    {path: 'cart', loadComponent: () => import('./pages/cart/cart.component').then(m => m.CartComponent)},
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
+  { path: 'products', component: ProductsListComponent },
+  { path: 'products/new', component: ProductRegistrationComponent },
+  { path: 'products/edit/:id', component: ProductRegistrationComponent },
+  { path: 'cart', component: CartComponent }
 ];
