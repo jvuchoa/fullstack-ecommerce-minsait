@@ -1,0 +1,54 @@
+<div class="container">
+  <h1>Carrinho de Compras</h1>
+
+  <div *ngIf="cartItems.length === 0" class="empty-cart">
+    <p>Seu carrinho está vazio</p>
+    <button routerLink="/products" class="btn-continue">
+      Ir para Produtos
+    </button>
+  </div>
+
+  <div *ngIf="cartItems.length > 0">
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Preço Unitário</th>
+          <th>Quantidade</th>
+          <th>Subtotal</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cartItems">
+          <td>{{ item.product.name }}</td>
+          <td>{{ item.product.price | currency:'BRL' }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.product.price * item.quantity | currency:'BRL' }}</td>
+          <td>
+            <button (click)="removeItem(item.product.id!)" class="btn-remove">
+              🗑️ Remover
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="cart-summary">
+      <h2>Valor Total: {{ total | currency:'BRL' }}</h2>
+    </div>
+
+    <div class="cart-actions">
+      <button routerLink="/products" class="btn-continue">
+        Continuar Comprando
+      </button>
+      <button (click)="clearCart()" class="btn-clear">
+        Limpar Carrinho
+      </button>
+      <button class="btn-checkout">
+        Finalizar Compra
+      </button>
+    </div>
+  </div>
+</div>
