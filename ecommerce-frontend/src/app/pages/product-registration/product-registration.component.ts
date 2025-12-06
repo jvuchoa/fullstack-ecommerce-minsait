@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/products/product.service';
+import { Product } from '../../models/product.model';
 @Component({
   selector: 'app-product-registration',
   standalone: true,
@@ -10,7 +11,7 @@ import { ProductService } from '../../services/products/product.service';
   templateUrl: './product-registration.component.html',
   styleUrl: './product-registration.component.css'
 })
-export class ProductRegistrationComponent {
+export class ProductRegistrationComponent implements OnInit {
    productId?: number;
   isEditMode = false;
 
@@ -37,7 +38,7 @@ export class ProductRegistrationComponent {
   
   loadProduct(id: number): void {
     this.productService.findById(id).subscribe({
-      next: (product) => {
+      next: (product: Product) => {
         this.productForm.patchValue(product);
       },
       error: () => {
@@ -56,10 +57,16 @@ export class ProductRegistrationComponent {
       return;
     }
 
-    const product = this.productForm.value;
+    const formValue = this.productForm.getRawValue();
+    
+    const product: Product = {
+      name: formValue.name || '',
+      barcode: formValue.barcode || '',
+      price: Number(formValue.price) || 0
+    };
 
     if (this.isEditMode && this.productId) {
-      this.productService.update(this.productId, product as any).subscribe({
+      this.productService.update(this.productId, product).subscribe({
         next: () => {
           alert('Produto atualizado!');
           this.router.navigate(['/products']);
@@ -70,7 +77,7 @@ export class ProductRegistrationComponent {
         }
       });
     } else {
-      this.productService.create(product as any).subscribe({
+      this.productService.create(product).subscribe({
         next: () => {
           alert('Produto cadastrado!');
           this.router.navigate(['/products']);
