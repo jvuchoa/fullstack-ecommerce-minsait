@@ -12,9 +12,9 @@ import id from '@angular/common/locales/extra/id';
   standalone: true,
   imports: [CommonModule, RouterLink, TableComponent],
   templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.css'
+  styleUrls: ['./product-list.component.css']
 })
-export class ListagemProdutosComponent implements OnInit {
+export class ProductsListComponent implements OnInit {
   products: Product[] = [];
 
   constructor(
