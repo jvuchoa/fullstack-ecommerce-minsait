@@ -1,4 +1,3 @@
-<!-- Colunas: Nome, Preço (formatado), Cód. Barras (requisito do documento) -->
 <table>
   <thead>
     <tr>
@@ -14,7 +13,7 @@
       <td>{{ product.price | currency:'BRL' }}</td>
       <td>{{ product.barcode }}</td>
       <td>
-        <button [routerLink]="['/produtos/editar', product.id]" class="btn-edit">
+        <button [routerLink]="['/products/edit', product.id]" class="btn-edit">
            Editar
         </button>
         

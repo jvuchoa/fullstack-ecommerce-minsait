@@ -15,9 +15,9 @@ export class ProductRegistrationComponent {
   isEditMode = false;
 
   productForm = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    barcode: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    price: new FormControl(0, [Validators.required, Validators.min(0.01)])
+    name: new FormControl<string>('', [Validators.required, Validators.minLength(3)]),
+  barcode: new FormControl<string>('', [Validators.required, Validators.minLength(8)]),
+  price: new FormControl<number | null>(null, [Validators.required, Validators.min(0.01)])
   });
 
   productService = inject(ProductService);
@@ -34,46 +34,55 @@ export class ProductRegistrationComponent {
     });
 
 }
+  
   loadProduct(id: number): void {
     this.productService.findById(id).subscribe({
       next: (product) => {
         this.productForm.patchValue(product);
       },
-      error: (err) => {
-        alert('Erro ao carregar produto.');
+      error: () => {
+        alert('Erro ao carregar produto');
         this.router.navigate(['/products']);
       }
     });
   }
-    onSubmit(): void {
+
+  onSubmit(): void {
+    console.log('Form válido?', this.productForm.valid);
+    console.log('Form value:', this.productForm.value);
+
     if (this.productForm.invalid) {
-      alert('Por favor, corrija os erros no formulário.');
+      alert('Preencha todos os campos corretamente');
       return;
     }
+
     const product = this.productForm.value;
 
     if (this.isEditMode && this.productId) {
       this.productService.update(this.productId, product as any).subscribe({
         next: () => {
-          alert('Produto atualizado com sucesso!');
+          alert('Produto atualizado!');
           this.router.navigate(['/products']);
         },
-        error: () => {
-          alert('Erro ao atualizar produto.');
+        error: (err) => {
+          console.error('Erro ao atualizar:', err);
+          alert('Erro ao atualizar');
         }
       });
-  }else{
+    } else {
       this.productService.create(product as any).subscribe({
         next: () => {
-          alert('Produto criado com sucesso!');
+          alert('Produto cadastrado!');
           this.router.navigate(['/products']);
         },
-        error: () => {
-          alert('Erro ao criar produto.');
+        error: (err) => {
+          console.error('Erro ao cadastrar:', err);
+          alert('Erro ao cadastrar');
         }
       });
     }
   }
+
   onCancel(): void {
     this.router.navigate(['/products']);
   }
