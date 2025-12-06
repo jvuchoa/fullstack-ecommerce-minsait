@@ -1,5 +1,5 @@
 header {
-  background-color: #333;
+  background-color: #000000;
   color: white;
   padding: 1rem 2rem;
   margin-bottom: 2rem;
@@ -30,5 +30,5 @@ nav a {
 }
 
 nav a:hover {
-  background-color: #4CAF50;
+  background-color: #1347b8;
 }
